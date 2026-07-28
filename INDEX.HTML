@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>GlossiCat — $GLOXI Launch</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <!-- GSAP (for animations) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <style>
+    :root {
+      --white: #ffffff;
+      --gold: #ffd700;
+      --charcoal: #333333;
+      --diamond: #e8e8e8;
+      --bg-soft: #fdfdfd;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "DM Sans", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--white);
+      color: var(--charcoal);
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3 {
+      font-family: "Playfair Display", serif;
+      color: var(--charcoal);
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .page {
+      width: 100%;
+      min-height: 100vh;
+    }
+
+    section {
+      width: 100%;
+      min-height: 100vh;
+      padding: 80px 10vw;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* HERO — COLUMN HALLWAY */
+    .hero {
+      background: radial-gradient(circle at top, #fff 0%, #f7f7f7 40%, #f0e4c0 100%);
+      color: var(--charcoal);
+      overflow: hidden;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1.2fr;
+      gap: 40px;
+      align-items: center;
+      width: 100%;
+      max-width: 1200px;
+      position: relative;
+    }
+
+    .hero-columns {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.4;
+      background-image: linear-gradient(to right, rgba(255,255,255,0.7) 0, rgba(255,255,255,0.7) 10%, transparent 10%, transparent 20%);
+      background-size: 120px 100%;
+      mix-blend-mode: screen;
+    }
+
+    .hero-left h1 {
+      font-size: 2.8rem;
+      line-height: 1.1;
+      margin-bottom: 16px;
+      color: var(--gold);
+    }
+
+    .hero-left p {
+      font-size: 1rem;
+      max-width: 320px;
+    }
+
+    .hero-cta {
+      margin-top: 24px;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 12px 28px;
+      border-radius: 999px;
+      background: var(--gold);
+      color: var(--charcoal);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px rgba(0,0,0,0.2);
+    }
+
+    .hero-center {
+      text-align: center;
+      position: relative;
+    }
+
+    .halo {
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,215,0,0.8) 0%, transparent 60%);
+      margin: 0 auto 16px;
+      filter: blur(2px);
+    }
+
+    .glossicat-avatar {
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ffffff 0%, #f7f7f7 40%, #ffd700 100%);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Playfair Display", serif;
+      font-size: 1.6rem;
+      color: var(--charcoal);
+      position: relative;
+    }
+
+    .glossicat-avatar::after {
+      content: "👑";
+      position: absolute;
+      top: -18px;
+      font-size: 1.6rem;
+    }
+
+    .hero-right {
+      text-align: right;
+    }
+
+    .hero-right h2 {
+      font-size: 1.4rem;
+      margin-bottom: 8px;
+    }
+
+    .hero-right p {
+      font-size: 0.95rem;
+      max-width: 320px;
+      margin-left: auto;
+    }
+
+    /* GENERIC SECTION STYLES */
+    .section-inner {
+      width: 100%;
+      max-width: 1100px;
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .section-inner.reverse {
+      grid-template-columns: 1fr 1.1fr;
+    }
+
+    .section-visual {
+      border-radius: 24px;
+      background: linear-gradient(135deg, #ffffff 0%, #f7f7f7 40%, #ffd700 100%);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+      min-height: 260px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Playfair Display", serif;
+      font-size: 1.4rem;
+      color: var(--charcoal);
+      text-align: center;
+      padding: 24px;
+    }
+
+    .section-content h2 {
+      font-size: 2rem;
+      margin-bottom: 12px;
+      color: var(--gold);
+    }
+
+    .section-content p {
+      font-size: 0.98rem;
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+
+    .section-content .tagline {
+      font-style: italic;
+      color: var(--charcoal);
+      opacity: 0.8;
+    }
+
+    .section-content .cta-row {
+      margin-top: 20px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn-outline {
+      padding: 10px 22px;
+      border-radius: 999px;
+      border: 1px solid var(--gold);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(6px);
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .btn-outline:hover {
+      background: var(--gold);
+      transform: translateY(-1px);
+    }
+
+    /* COMMUNITY SECTION */
+    .community {
+      background: radial-gradient(circle at top, #ffffff 0%, #fdfdfd 40%, #e8e8e8 100%);
+    }
+
+    .icon-row {
+      display: flex;
+      gap: 18px;
+      margin-top: 16px;
+    }
+
+    .icon-pill {
+      padding: 10px 18px;
+      border-radius: 999px;
+      border: 1px solid var(--gold);
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.8);
+    }
+
+    /* FOOTER */
+    .footer {
+      background: linear-gradient(180deg, #ffffff 0%, #fdfdfd 40%, #e8e8e8 100%);
+      text-align: center;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .footer .halo-footer {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,215,0,0.7) 0%, transparent 60%);
+      margin: 0 auto 8px;
+      filter: blur(2px);
+    }
+
+    .footer-logo {
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 999px;
+      border: 1px solid var(--gold);
+      background: rgba(255,255,255,0.9);
+      font-family: "Playfair Display", serif;
+      font-size: 1rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .footer p {
+      font-size: 0.85rem;
+      opacity: 0.8;
+    }
+
+    .footer .scripture {
+      font-style: italic;
+    }
+
+    /* SIMPLE RESPONSIVE */
+    @media (max-width: 900px) {
+      section {
+        padding: 60px 6vw;
+      }
+
+      .hero-inner {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .hero-right {
+        text-align: center;
+      }
+
+      .hero-right p {
+        margin: 0 auto;
+      }
+
+      .section-inner,
+      .section-inner.reverse {
+        grid-template-columns: 1fr;
+      }
+
+      .section-content {
+        text-align: center;
+      }
+
+      .section-content .cta-row {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- HERO: $GLOXI NOW LIVE ON SOLANA -->
+    <section class="hero" id="hero">
+      <div class="hero-columns"></div>
+      <div class="hero-inner">
+        <div class="hero-left">
+          <h1>$GLOXI Now Live on Solana</h1>
+          <p>Luxury meets meme. Step into the GlossiCat Empire and witness the queen of the memeverse ascend on Solana.</p>
+          <div class="hero-cta">
+            <a href="#token" class="btn-primary">Enter the Empire</a>
+          </div>
+        </div>
+
+        <div class="hero-center">
+          <div class="halo" id="heroHalo"></div>
+          <div class="glossicat-avatar">
+            GlossiCat
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <h2>From Above. Unchanging.</h2>
+          <p>Every good and perfect gift is from above. $GLOXI is crowned in light, built for those who love luxury and lore.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- LORE SECTION -->
+    <section id="lore">
+      <div class="section-inner">
+        <div class="section-visual">
+          Luxury Meme Queen  
+          <br /><br />
+          Gold gown, crown, and columns.  
+          <br />
+          The empire aesthetic in one frame.
+        </div>
+        <div class="section-content">
+          <h2>The Luxury Meme Queen</h2>
+          <p>Born from light and luxury, GlossiCat reigns over the memeverse with elegance, wit, and unapologetic gold‑dripped energy.</p>
+          <p class="tagline">House of Glossi. Empire in motion.</p>
+          <div class="cta-row">
+            <a href="#token" class="btn-outline">Discover the Story</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOKEN SECTION -->
+    <section id="token">
+      <div class="section-inner reverse">
+        <div class="section-content">
+          <h2>$GLOXI on Solana</h2>
+          <p><strong>Chain:</strong> Solana</p>
+          <p><strong>Symbol:</strong> $GLOXI</p>
+          <p><strong>Utility:</strong> Lore‑driven community, empire‑style branding, and future GlossiVerse integrations.</p>
+          <p class="tagline">From Above. Unchanging.</p>
+          <div class="cta-row">
+            <a href="#" class="btn-outline">View on Solscan</a>
+            <a href="#" class="btn-outline">Get $GLOXI</a>
+          </div>
+        </div>
+        <div class="section-visual">
+          Solana × GlossiCat  
+          <br /><br />
+          Geometric gold, divine white,  
+          <br />
+          and a chain built for speed.
+        </div>
+      </div>
+    </section>
+
+    <!-- COMMUNITY SECTION -->
+    <section class="community" id="community">
+      <div class="section-inner">
+        <div class="section-visual">
+          Join the GlossiVerse  
+          <br /><br />
+          Holders, builders, believers.  
+          <br />
+          The empire grows together.
+        </div>
+        <div class="section-content">
+          <h2>Join the GlossiVerse</h2>
+          <p>Connect with the community that crowns GlossiCat as the Luxury Meme Queen. Telegram, X, and beyond.</p>
+          <div class="icon-row">
+            <div class="icon-pill">📨 Telegram</div>
+            <div class="icon-pill">✖ X (Twitter)</div>
+          </div>
+          <div class="cta-row">
+            <a href="#" class="btn-outline">Join Telegram</a>
+            <a href="#" class="btn-outline">Follow on X</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER / ASCENSION -->
+    <section class="footer" id="footer">
+      <div class="halo-footer" id="footerHalo"></div>
+      <div class="footer-logo">$GLOXI • GlossiCat</div>
+      <p>© 2026 GlossiCat Empire. All rights reserved.</p>
+      <p class="scripture">“Every good and perfect gift is from above.” — James 1:17</p>
+    </section>
+  </div>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    // HERO halo breathing
+    gsap.to("#heroHalo", {
+      scale: 1.15,
+      duration: 3,
+      repeat: -1,
+      yoyo: true,
+      ease: "power1.inOut"
+    });
+
+    // Parallax columns
+    gsap.to(".hero-columns", {
+      yPercent: -20,
+      ease: "none",
+      scrollTrigger: {
+        trigger: "#hero",
+        start: "top top",
+        end: "bottom top",
+        scrub: true
+      }
+    });
+
+    // Section fade/slide in
+    document.querySelectorAll("section").forEach((sec) => {
+      if (sec.id === "hero" || sec.id === "footer") return;
+      gsap.from(sec.querySelector(".section-inner"), {
+        opacity: 0,
+        y: 40,
+        duration: 1,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: sec,
+          start: "top 80%",
+          toggleActions: "play none none reverse"
+        }
+      });
+    });
+
+    // Footer halo slow expansion
+    gsap.to("#footerHalo", {
+      scale: 1.2,
+      duration: 4,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut"
+    });
+  </script>
+</body>
+</html>
+
